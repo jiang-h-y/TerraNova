@@ -14,7 +14,7 @@ class Predictor:
     def __init__(self, X, y):
         self.X = X
         self.y = y
-        self.input_shape = len(X.columns)
+        self.input_shape = len(X[0])
         self.output_classes = len(y.columns)
     
     def fit_model(self, test_size=0.2):

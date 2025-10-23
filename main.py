@@ -4,6 +4,7 @@ main.py
 
 import pandas as pd
 from predictor import Predictor
+from sklearn.preprocessing import MinMaxScaler
 
 FILENAME = "data/boston_buildings.csv"
 
@@ -30,10 +31,12 @@ def preprocess(filename):
 
 def main():
     df = preprocess(FILENAME)
-    features_df = df[FEATURES].apply(lambda col: min_max_normalize(col))
+
+    scaler = MinMaxScaler()
+    features = scaler.fit_transform(df[FEATURES])
     labels_encoded_df = pd.get_dummies(df[LABEL], columns=[LABEL])
 
-    predictor = Predictor(features_df, labels_encoded_df)
+    predictor = Predictor(features, labels_encoded_df)
     predictor.fit_model()
     predictor.plot_loss()
     
