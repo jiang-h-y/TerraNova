@@ -31,10 +31,13 @@ def preprocess(filename):
 
 def main():
     df = preprocess(FILENAME)
+    df = df[df["use_class"] != "Vacant"]
 
     scaler = MinMaxScaler()
     features = scaler.fit_transform(df[FEATURES])
     labels_encoded_df = pd.get_dummies(df[LABEL], columns=[LABEL])
+
+    print(labels_encoded_df)
 
     predictor = Predictor(features, labels_encoded_df)
     predictor.fit_model()
